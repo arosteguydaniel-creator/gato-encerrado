@@ -38,14 +38,13 @@ El manual todavía no tiene los textos, así que estas reglas se infirieron de l
 3. Quien lo encierra gana 1 punto y la carta se da vuelta, mostrando el canil.
 4. **Giros (opcional):** quien encerró al gato puede cambiar esa carta de lugar con cualquier otra.
 5. Si sale un número cuyo gato ya está encerrado, hay que recordar en qué canil quedó. Quien lo encuentre suma 1 punto (la carta vuelve a quedar boca abajo).
-6. Si tocás una carta equivocada perdés 1 punto (nunca por debajo de 0) y quedás afuera de esa ronda.
+6. Si tocás una carta equivocada no hay penalización de puntos (confirmado), pero quedás afuera de esa ronda.
 7. Cada jugador avanza su cubo por la pista de puntos.
 8. **Gana quien llega primero a 10 puntos.**
 
 ### Dudas abiertas para confirmar
 
 - ¿El número del dado indica la cantidad de gatos de la carta, o hay otra correspondencia?
-- ¿Equivocarse resta un punto, hace perder el turno, o no tiene penalidad?
 - Cuando las 6 cartas quedan encerradas, ¿se siguen jugando de memoria o se vuelven a dar vuelta?
 - Al acertar un gato ya encerrado, ¿la carta vuelve a quedar boca arriba o sigue en el canil?
 - En los giros, ¿se intercambia con otra carta, se mueve a un lugar libre o la cambia otro jugador?

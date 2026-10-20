@@ -235,15 +235,14 @@
       }
       cerrarRonda(texto + " Lanzá el dado otra vez.");
     } else {
-      j.pts = Math.max(0, j.pts - 1);
       j.fuera = true;
       carta.el.classList.add("error");
       luego(450, () => carta.el.classList.remove("error"));
       if (carta.encerrado) revelar(carta, "error");
       actualizarMarcador();
       decir(j.bot
-        ? `${j.nombre} se equivocó de gato y pierde 1 punto.`
-        : `¡Ese no era! Perdés 1 punto y quedás afuera de esta ronda.`);
+        ? `${j.nombre} se equivocó de gato y queda afuera de esta ronda.`
+        : `¡Ese no era! Quedás afuera de esta ronda.`);
       if (estado.jugadores.every((x) => x.fuera)) {
         revelar(cartaConGatos(estado.objetivo), "acierto");
         cerrarRonda("Todos se equivocaron. ¡Lanzá de nuevo!");

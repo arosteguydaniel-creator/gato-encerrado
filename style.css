@@ -7,6 +7,8 @@
   --azul: #1f3f74;
   --verde: #4caf50;
   --rojo: #d23b2a;
+  --panel: #fff;
+  --tinta: #1d1410;
 }
 
 * { box-sizing: border-box; }
@@ -16,7 +18,7 @@ html, body { margin: 0; height: 100%; }
 body {
   font-family: "Baloo 2", system-ui, sans-serif;
   background: var(--naranja);
-  color: #fff;
+  color: var(--tinta);
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -29,29 +31,29 @@ body {
   align-items: center;
   padding: 24px 16px 32px;
   gap: 12px;
-  background: var(--naranja) url("assets/fondo-gatos.jpg") center / 420px repeat;
+  background: var(--panel);
 }
 #inicio .logo {
   width: min(420px, 90vw);
   border-radius: 24px;
-  box-shadow: 0 8px 0 rgba(0,0,0,.35);
+  box-shadow: 0 8px 0 var(--naranja-osc);
 }
 .lema {
   max-width: 440px; text-align: center; font-weight: 700; font-size: 1.15rem;
-  background: var(--negro); padding: 10px 16px; border-radius: 16px; margin: 4px 0;
+  background: var(--naranja); color: #fff; padding: 10px 16px; border-radius: 16px; margin: 4px 0;
 }
 .panel {
-  background: var(--negro); border-radius: 20px; padding: 18px;
+  background: var(--panel); border: 3px solid var(--naranja); border-radius: 20px; padding: 18px;
   width: min(440px, 100%); display: flex; flex-direction: column; gap: 12px;
 }
 .config label { display: flex; flex-direction: column; font-weight: 700; gap: 4px; }
 .config label.check { flex-direction: row; align-items: flex-start; gap: 10px; font-weight: 500; }
 .config input[type=checkbox] { width: 22px; height: 22px; accent-color: var(--rosa); flex: none; margin-top: 2px; }
 .config input, .config select {
-  font: inherit; padding: 8px 12px; border-radius: 12px; border: none;
+  font: inherit; padding: 8px 12px; border-radius: 12px; border: 2px solid #e8d8c4;
   background: var(--crema); color: var(--negro);
 }
-.creditos { font-size: .85rem; text-align: center; opacity: .95; background: rgba(0,0,0,.6); padding: 6px 12px; border-radius: 12px; }
+.creditos { font-size: .85rem; text-align: center; opacity: .95; background: rgba(255,255,255,.9); padding: 6px 12px; border-radius: 12px; }
 
 .btn {
   font: inherit; font-weight: 800; font-size: 1.05rem; cursor: pointer;
@@ -77,7 +79,8 @@ body {
   position: relative; flex: none;
   width: min(560px, 62vh, 100%);
   aspect-ratio: 1 / 1.02;
-  background: var(--negro); border-radius: 24px;
+  background: var(--panel); border-radius: 24px;
+  box-shadow: 0 6px 0 rgba(0,0,0,.18);
 }
 
 .carta {
@@ -97,10 +100,10 @@ body {
 }
 .carta .cara img { width: 100%; height: 100%; display: block; pointer-events: none; user-select: none; }
 .carta .dorso { transform: rotateY(180deg); }
-.carta:hover .interior { filter: brightness(1.06); }
 .carta.moviendo { z-index: 5; }
-.carta.elegible { outline: 4px dashed var(--crema); outline-offset: 4px; border-radius: 10px; }
-.carta.error .cara { animation: temblar .35s; box-shadow: 0 0 0 5px var(--rojo); }
+.carta.elegible { outline: 4px dashed var(--rosa); outline-offset: 4px; border-radius: 10px; }
+.carta.error { animation: temblar .35s; }
+.carta.error .cara { box-shadow: 0 0 0 5px var(--rojo); }
 .carta.acierto .cara { box-shadow: 0 0 0 5px var(--verde); }
 
 .zarpa {
@@ -122,7 +125,7 @@ body {
 
 .lateral { flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .zona-dado {
-  background: var(--negro); border-radius: 20px; padding: 16px;
+  background: var(--panel); border-radius: 20px; padding: 16px;
   display: flex; align-items: center; justify-content: center; gap: 18px;
 }
 
@@ -145,10 +148,11 @@ body {
 .mensaje {
   margin: 0; background: var(--crema); color: var(--negro); border-radius: 16px;
   padding: 10px 14px; font-weight: 700; min-height: 3.4em; font-size: 1.05rem;
+  border: 2px solid var(--panel);
 }
 .marcador { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .marcador li {
-  display: flex; align-items: center; gap: 10px; background: var(--negro);
+  display: flex; align-items: center; gap: 10px; background: var(--panel);
   border-radius: 12px; padding: 6px 12px; font-weight: 700; transition: background .3s;
 }
 .marcador li.fuera { opacity: .5; }
@@ -169,7 +173,7 @@ body {
 
 /* Diálogos */
 dialog {
-  border: none; border-radius: 22px; background: var(--negro); color: #fff;
+  border: none; border-radius: 22px; background: var(--panel); color: var(--tinta);
   max-width: min(520px, calc(100vw - 32px)); padding: 20px 22px; font-family: inherit;
 }
 dialog::backdrop { background: rgba(0,0,0,.6); }
