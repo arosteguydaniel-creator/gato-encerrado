@@ -13,7 +13,7 @@
   ];
 
   // Posición (en % del ancho) de cada número sobre la pista; el índice 0 es la salida.
-  const PISTA_X = [2.5, 8.9, 20.7, 28.3, 37.8, 46.3, 54, 63.4, 72.4, 80.6, 91.3];
+  const PISTA_X = [2.5, 8.0, 20.5, 28.3, 37.8, 46.3, 54, 63.4, 72.4, 80.6, 91.3];
   const META = 10;
 
   const COLORES = ["#e2197c", "#2f6fd6", "#f2c230", "#35b36a", "#9b5de5"];
@@ -55,7 +55,7 @@
   function nuevaPartida() {
     limpiarTimers();
     const nRivales = +$("#rivales").value;
-    const nombre = $("#nombre").value.trim() || "Vos";
+    const nombre = $("#nombre").value.trim() || "Tú";
     const jugadores = [{ nombre, bot: false, color: COLORES[0], pts: 0, fuera: false }];
     for (let i = 0; i < nRivales; i++)
       jugadores.push({ nombre: NOMBRES_BOT[i], emoji: EMOJI_BOT[i], bot: true, color: COLORES[i + 1], pts: 0, fuera: false });
@@ -75,7 +75,7 @@
     construirMarcador();
     ui.dado.dataset.cara = "1";
     setBoton("Lanzar dado", true);
-    decir("Lanzá el dado para empezar. Buscá la carta con tantos gatos como marque el dado.");
+    decir("Lanza el dado para empezar. Busca la carta con tantos gatos como marque el dado.");
     mostrar("juego");
   }
 
@@ -168,8 +168,8 @@
     estado.fase = "ronda";
     const carta = cartaConGatos(n);
     decir(carta.encerrado
-      ? `¡Salió ${n}! Ese gato ya está encerrado… ¿te acordás en qué canil está?`
-      : `¡Salió ${n}! ¡Atrapá la carta con ${n} gato${n > 1 ? "s" : ""}!`);
+      ? `¡Salió ${n}! Ese gato ya está encerrado… ¿recuerdas en qué canil está?`
+      : `¡Salió ${n}! ¡Atrapa la carta con ${n} gato${n > 1 ? "s" : ""}!`);
 
     // Los rivales virtuales reaccionan con su propio tiempo y a veces se equivocan.
     const d = estado.dif;
@@ -188,7 +188,7 @@
     luego(9000, () => {
       if (estado.fase !== "ronda") return;
       revelar(carta, "acierto");
-      cerrarRonda(`Nadie encontró al gato de ${n}. ¡Lanzá de nuevo!`);
+      cerrarRonda(`Nadie encontró al gato de ${n}. ¡Lanza de nuevo!`);
     });
   }
 
@@ -222,7 +222,7 @@
       }
       actualizarMarcador();
 
-      const quien = j.bot ? j.nombre : "¡Vos";
+      const quien = j.bot ? j.nombre : "¡Tú";
       const texto = j.bot
         ? `${j.nombre} ${yaEstaba ? "recordó dónde estaba" : "encerró"} al gato de ${estado.objetivo}.`
         : `${quien} ${yaEstaba ? "lo recordaste" : "lo encerraste"}! +1 punto.`;
@@ -233,7 +233,7 @@
         decir(texto);
         return luego(700, () => empezarCambio(i, texto));
       }
-      cerrarRonda(texto + " Lanzá el dado otra vez.");
+      cerrarRonda(texto + " Lanza el dado otra vez.");
     } else {
       j.fuera = true;
       carta.el.classList.add("error");
@@ -241,11 +241,11 @@
       if (carta.encerrado) revelar(carta, "error");
       actualizarMarcador();
       decir(j.bot
-        ? `${j.nombre} se equivocó de gato y queda afuera de esta ronda.`
-        : `¡Ese no era! Quedás afuera de esta ronda.`);
+        ? `${j.nombre} se equivocó de gato y queda fuera de esta ronda.`
+        : `¡Ese no era! Quedas fuera de esta ronda.`);
       if (estado.jugadores.every((x) => x.fuera)) {
         revelar(cartaConGatos(estado.objetivo), "acierto");
-        cerrarRonda("Todos se equivocaron. ¡Lanzá de nuevo!");
+        cerrarRonda("Todos se equivocaron. ¡Lanza de nuevo!");
       }
     }
   }
@@ -266,7 +266,7 @@
     if (!j.bot) {
       estado.cartas.forEach((c) => c.el.classList.toggle("elegible", c !== estado.cartaGanada));
       setBoton("Seguir sin cambiar", true);
-      decir(texto + " Tocá otra carta para cambiarlas de lugar, o seguí sin cambiar.");
+      decir(texto + " Toca otra carta para cambiarlas de lugar, o sigue sin cambiar.");
       return;
     }
     setBoton("Lanzar dado", false);
@@ -283,7 +283,7 @@
 
   function terminarCambio(texto) {
     estado.cartas.forEach((c) => c.el.classList.remove("elegible"));
-    cerrarRonda((texto || "Seguimos.") + " Lanzá el dado.");
+    cerrarRonda((texto || "Seguimos.") + " Lanza el dado.");
   }
 
   function intercambiar(a, b) {

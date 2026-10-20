@@ -2,20 +2,20 @@
 
 Versión web de prueba de **Gato Encerrado**, el juego de reflejos y memoria felina de **La Vaca del Tablero**.
 
-> ¡Lanzá el dado, agudizá la vista y sé el más rápido en atrapar al gato!
+> ¡Lanza el dado, agudiza la vista y sé el más rápido en atrapar al gato!
 
 - 2 a 5 jugadores · 8+ · 15 minutos
 - Diseño: Danny Blue Jet · Ilustración: Buho Pintura
 
-En esta versión jugás en el navegador contra 1 a 4 gatos virtuales (rivales controlados por la computadora), con tres niveles de dificultad. Funciona en computadora y en el celular, sin instalar nada.
+En esta versión juegas en el navegador contra 1 a 4 gatos virtuales (rivales controlados por la computadora), con tres niveles de dificultad. Funciona en computadora y en el celular, sin instalar nada.
 
 ## Cómo jugarlo
 
-Abrí `index.html` en el navegador, o servilo con cualquier servidor estático:
+Abre `index.html` en el navegador, o sírvelo con cualquier servidor estático:
 
 ```bash
 python3 -m http.server 8000
-# y entrá a http://localhost:8000
+# y entra a http://localhost:8000
 ```
 
 Está pensado para publicarse con **GitHub Pages** (Settings → Pages → Deploy from branch → `main` / root).
@@ -38,7 +38,7 @@ El manual todavía no tiene los textos, así que estas reglas se infirieron de l
 3. Quien lo encierra gana 1 punto y la carta se da vuelta, mostrando el canil.
 4. **Giros (opcional):** quien encerró al gato puede cambiar esa carta de lugar con cualquier otra.
 5. Si sale un número cuyo gato ya está encerrado, hay que recordar en qué canil quedó. Quien lo encuentre suma 1 punto (la carta vuelve a quedar boca abajo).
-6. Si tocás una carta equivocada no hay penalización de puntos (confirmado), pero quedás afuera de esa ronda.
+6. Si tocas una carta equivocada no hay penalización de puntos (confirmado), pero quedas fuera de esa ronda.
 7. Cada jugador avanza su cubo por la pista de puntos.
 8. **Gana quien llega primero a 10 puntos.**
 
