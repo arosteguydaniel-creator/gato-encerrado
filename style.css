@@ -1,0 +1,195 @@
+:root {
+  --naranja: #e66a36;
+  --naranja-osc: #c4552b;
+  --negro: #111;
+  --crema: #f4e6d2;
+  --rosa: #e2197c;
+  --azul: #1f3f74;
+  --verde: #4caf50;
+  --rojo: #d23b2a;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; height: 100%; }
+
+body {
+  font-family: "Baloo 2", system-ui, sans-serif;
+  background: var(--naranja);
+  color: #fff;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pantalla { display: none; min-height: 100%; }
+.pantalla.activa { display: flex; }
+
+/* ---------- Inicio ---------- */
+#inicio {
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 32px;
+  gap: 12px;
+  background: var(--naranja) url("assets/fondo-gatos.jpg") center / 420px repeat;
+}
+#inicio .logo {
+  width: min(420px, 90vw);
+  border-radius: 24px;
+  box-shadow: 0 8px 0 rgba(0,0,0,.35);
+}
+.lema {
+  max-width: 440px; text-align: center; font-weight: 700; font-size: 1.15rem;
+  background: var(--negro); padding: 10px 16px; border-radius: 16px; margin: 4px 0;
+}
+.panel {
+  background: var(--negro); border-radius: 20px; padding: 18px;
+  width: min(440px, 100%); display: flex; flex-direction: column; gap: 12px;
+}
+.config label { display: flex; flex-direction: column; font-weight: 700; gap: 4px; }
+.config label.check { flex-direction: row; align-items: flex-start; gap: 10px; font-weight: 500; }
+.config input[type=checkbox] { width: 22px; height: 22px; accent-color: var(--rosa); flex: none; margin-top: 2px; }
+.config input, .config select {
+  font: inherit; padding: 8px 12px; border-radius: 12px; border: none;
+  background: var(--crema); color: var(--negro);
+}
+.creditos { font-size: .85rem; text-align: center; opacity: .95; background: rgba(0,0,0,.6); padding: 6px 12px; border-radius: 12px; }
+
+.btn {
+  font: inherit; font-weight: 800; font-size: 1.05rem; cursor: pointer;
+  border: none; border-radius: 14px; padding: 10px 18px;
+  background: var(--rosa); color: #fff; box-shadow: 0 4px 0 #8f0f4f;
+  transition: transform .08s, box-shadow .08s, opacity .2s;
+}
+.btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #8f0f4f; }
+.btn:disabled { opacity: .45; cursor: default; }
+.btn.grande { font-size: 1.4rem; padding: 12px; }
+.btn.secundario { background: var(--azul); box-shadow: 0 4px 0 #0c1f3f; }
+.btn.mini { padding: 4px 12px; font-size: .95rem; }
+
+/* ---------- Juego ---------- */
+#juego { flex-direction: column; padding: 8px 16px 16px; gap: 10px; max-width: 1100px; margin: 0 auto; }
+.barra { display: flex; justify-content: space-between; align-items: center; }
+.logo-chico { height: 52px; border-radius: 10px; }
+.acciones { display: flex; gap: 8px; }
+
+.mesa { display: flex; gap: 16px; align-items: flex-start; }
+
+.tablero {
+  position: relative; flex: none;
+  width: min(560px, 62vh, 100%);
+  aspect-ratio: 1 / 1.02;
+  background: var(--negro); border-radius: 24px;
+}
+
+.carta {
+  position: absolute; width: 30%; aspect-ratio: 400 / 624;
+  perspective: 900px; cursor: pointer;
+  padding: 0; border: none; background: none; font: inherit;
+  transition: left .55s cubic-bezier(.5,0,.3,1), top .55s cubic-bezier(.5,0,.3,1);
+}
+.carta .interior {
+  position: absolute; inset: 0; transform-style: preserve-3d;
+  transition: transform .45s;
+}
+.carta.encerrado .interior { transform: rotateY(180deg); }
+.carta .cara {
+  position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  border-radius: 9%/6%; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,.5);
+}
+.carta .cara img { width: 100%; height: 100%; display: block; pointer-events: none; user-select: none; }
+.carta .dorso { transform: rotateY(180deg); }
+.carta:hover .interior { filter: brightness(1.06); }
+.carta.moviendo { z-index: 5; }
+.carta.elegible { outline: 4px dashed var(--crema); outline-offset: 4px; border-radius: 10px; }
+.carta.error .cara { animation: temblar .35s; box-shadow: 0 0 0 5px var(--rojo); }
+.carta.acierto .cara { box-shadow: 0 0 0 5px var(--verde); }
+
+.zarpa {
+  position: absolute; left: 50%; top: 50%; width: 46%; aspect-ratio: 1;
+  transform: translate(-50%, -50%) scale(.2); z-index: 3; pointer-events: none;
+  border-radius: 50%; display: grid; place-items: center;
+  font-size: 2.2rem; animation: zarpazo .9s forwards;
+  border: 4px solid #fff;
+}
+@keyframes zarpazo {
+  0% { transform: translate(-50%,-50%) scale(.2); opacity: 0; }
+  25% { transform: translate(-50%,-50%) scale(1.15); opacity: 1; }
+  70% { transform: translate(-50%,-50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%,-50%) scale(1); opacity: 0; }
+}
+@keyframes temblar {
+  0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); }
+}
+
+.lateral { flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.zona-dado {
+  background: var(--negro); border-radius: 20px; padding: 16px;
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+}
+
+/* Dado */
+.dado {
+  width: 84px; height: 84px; border-radius: 16px; background: var(--rojo);
+  box-shadow: inset -6px -6px 0 rgba(0,0,0,.25), 0 4px 0 #000;
+  display: grid; grid-template: repeat(3, 1fr) / repeat(3, 1fr); padding: 10px; flex: none;
+}
+.dado.rodando { animation: rodar .12s linear infinite; }
+@keyframes rodar { 0% { transform: rotate(0); } 50% { transform: rotate(14deg) scale(.95); } 100% { transform: rotate(0); } }
+.dado span { width: 15px; height: 15px; border-radius: 50%; background: #1a0d0b; place-self: center; visibility: hidden; }
+.dado[data-cara="1"] span:nth-child(5),
+.dado[data-cara="2"] span:is(:nth-child(1),:nth-child(9)),
+.dado[data-cara="3"] span:is(:nth-child(1),:nth-child(5),:nth-child(9)),
+.dado[data-cara="4"] span:is(:nth-child(1),:nth-child(3),:nth-child(7),:nth-child(9)),
+.dado[data-cara="5"] span:is(:nth-child(1),:nth-child(3),:nth-child(5),:nth-child(7),:nth-child(9)),
+.dado[data-cara="6"] span:is(:nth-child(1),:nth-child(3),:nth-child(4),:nth-child(6),:nth-child(7),:nth-child(9)) { visibility: visible; }
+
+.mensaje {
+  margin: 0; background: var(--crema); color: var(--negro); border-radius: 16px;
+  padding: 10px 14px; font-weight: 700; min-height: 3.4em; font-size: 1.05rem;
+}
+.marcador { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.marcador li {
+  display: flex; align-items: center; gap: 10px; background: var(--negro);
+  border-radius: 12px; padding: 6px 12px; font-weight: 700; transition: background .3s;
+}
+.marcador li.fuera { opacity: .5; }
+.marcador li.gano { background: var(--verde); }
+.marcador .pts { margin-left: auto; font-size: 1.3rem; }
+.cubo-ico { width: 18px; height: 18px; border-radius: 4px; flex: none; box-shadow: inset -3px -3px 0 rgba(0,0,0,.25); }
+
+/* Pista */
+.pista-wrap { overflow: hidden; }
+.pista { position: relative; width: 100%; max-width: 900px; margin: 0 auto; padding-top: 6px; }
+.pista img { width: 100%; display: block; }
+.cubo {
+  position: absolute; width: 3.2%; aspect-ratio: 1; border-radius: 18%;
+  border: 2px solid #000; box-shadow: inset -3px -3px 0 rgba(0,0,0,.25);
+  transform: translate(-50%, -50%);
+  transition: left .5s cubic-bezier(.4,1.6,.6,1), top .3s;
+}
+
+/* Diálogos */
+dialog {
+  border: none; border-radius: 22px; background: var(--negro); color: #fff;
+  max-width: min(520px, calc(100vw - 32px)); padding: 20px 22px; font-family: inherit;
+}
+dialog::backdrop { background: rgba(0,0,0,.6); }
+dialog h2 { margin: 0 0 8px; color: var(--naranja); }
+dialog ol { padding-left: 20px; margin: 0 0 10px; line-height: 1.35; }
+dialog li { margin-bottom: 6px; }
+.nota { font-size: .85rem; opacity: .7; }
+#fin { text-align: center; }
+.gato-fin { width: 140px; border-radius: 18px; }
+.fila { display: flex; gap: 10px; justify-content: center; }
+
+@media (max-width: 760px) {
+  .mesa { flex-direction: column; align-items: stretch; }
+  .tablero { width: 100%; max-width: 480px; margin: 0 auto; }
+  .lateral { gap: 8px; }
+  .zona-dado { padding: 10px; }
+  .dado { width: 64px; height: 64px; padding: 8px; }
+  .dado span { width: 11px; height: 11px; }
+  .marcador { flex-direction: row; flex-wrap: wrap; }
+  .marcador li { flex: 1 1 40%; padding: 4px 10px; }
+  .logo-chico { height: 40px; }
+  .cubo { width: 4%; }
+}

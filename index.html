@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Gato Encerrado</title>
+  <meta name="description" content="Probá online Gato Encerrado, el juego de reflejos y memoria felina de La Vaca del Tablero.">
+  <link rel="icon" href="assets/logo-gato.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Pantalla de inicio -->
+  <section id="inicio" class="pantalla activa">
+    <img class="logo" src="assets/logo.png" alt="Gato Encerrado">
+    <p class="lema">¡Lanzá el dado, agudizá la vista y sé el más rápido en atrapar al gato!</p>
+
+    <div class="panel config">
+      <label>Tu nombre
+        <input id="nombre" maxlength="14" value="Vos">
+      </label>
+      <label>Rivales (gatos virtuales)
+        <select id="rivales">
+          <option value="1">1 rival (2 jugadores)</option>
+          <option value="2" selected>2 rivales (3 jugadores)</option>
+          <option value="3">3 rivales (4 jugadores)</option>
+          <option value="4">4 rivales (5 jugadores)</option>
+        </select>
+      </label>
+      <label>Dificultad
+        <select id="dificultad">
+          <option value="facil">Gatito (fácil)</option>
+          <option value="normal" selected>Gato callejero (normal)</option>
+          <option value="dificil">Tigre (difícil)</option>
+        </select>
+      </label>
+      <label class="check">
+        <input type="checkbox" id="giros" checked>
+        Giros: quien encierra un gato puede cambiarlo de lugar (opcional)
+      </label>
+      <button id="btn-jugar" class="btn grande">¡A jugar!</button>
+      <button id="btn-reglas" class="btn secundario">Cómo se juega</button>
+    </div>
+    <p class="creditos">Diseño: Danny Blue Jet · Ilustración: Buho Pintura · La Vaca del Tablero<br>2 a 5 jugadores · 8+ · 15 min</p>
+  </section>
+
+  <!-- Partida -->
+  <section id="juego" class="pantalla">
+    <header class="barra">
+      <img src="assets/logo.png" alt="Gato Encerrado" class="logo-chico">
+      <div class="acciones">
+        <button id="btn-reglas-2" class="btn mini secundario" aria-label="Reglas">?</button>
+        <button id="btn-salir" class="btn mini secundario">Salir</button>
+      </div>
+    </header>
+
+    <div class="mesa">
+      <div id="tablero" class="tablero" aria-label="Cartas de gato"></div>
+
+      <aside class="lateral">
+        <div class="zona-dado">
+          <div id="dado" class="dado" data-cara="1" aria-live="polite"></div>
+          <button id="btn-dado" class="btn">Lanzar dado</button>
+        </div>
+        <p id="mensaje" class="mensaje" aria-live="polite">Lanzá el dado para empezar.</p>
+        <ul id="marcador" class="marcador"></ul>
+      </aside>
+    </div>
+
+    <div class="pista-wrap">
+      <div class="pista">
+        <img src="assets/pista.png" alt="Pista de puntuación del 1 al 10">
+        <div id="cubos"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reglas -->
+  <dialog id="reglas">
+    <h2>Cómo se juega</h2>
+    <ol>
+      <li><b>Preparación:</b> las 6 cartas de gato se ponen boca arriba. Cada carta tiene una cantidad distinta de gatos-sushi: de <b>1 a 6</b>.</li>
+      <li><b>Lanzá el dado.</b> Todos buscan a la vez la carta que tenga <b>tantos gatos como marca el dado</b>.</li>
+      <li>El primero en tocarla <b>encierra al gato</b>: gana 1 punto y la carta se da vuelta y muestra el canil.</li>
+      <li><b>Giros (opcional):</b> quien encerró al gato puede cambiar esa carta de lugar con otra. ¡Mirá bien a dónde va!</li>
+      <li>Si sale un número cuyo gato ya está encerrado, hay que <b>recordar</b> en qué canil está. Si acertás, sumás el punto.</li>
+      <li>¿Tocaste la carta equivocada? <b>Perdés 1 punto</b> y quedás afuera de esa ronda.</li>
+      <li>Cada jugador avanza su cubo en la pista de puntos.</li>
+      <li>Gana quien llega primero a <b>10 puntos</b>.</li>
+    </ol>
+    <p class="nota">Versión de prueba: las reglas pueden cambiar.</p>
+    <button class="btn" id="btn-cerrar-reglas">¡Entendido!</button>
+  </dialog>
+
+  <!-- Fin -->
+  <dialog id="fin">
+    <img src="assets/gato-hipnotizado.png" alt="" class="gato-fin">
+    <h2 id="fin-titulo"></h2>
+    <p id="fin-texto"></p>
+    <div class="fila">
+      <button class="btn" id="btn-revancha">Revancha</button>
+      <button class="btn secundario" id="btn-menu">Menú</button>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
