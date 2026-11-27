@@ -17,8 +17,7 @@
   const META = 10;
 
   const COLORES = ["#e2197c", "#2f6fd6", "#f2c230", "#35b36a", "#9b5de5"];
-  const NOMBRES_BOT = ["Michi Wasabi", "Nigiri", "Don Maki", "Tempura"];
-  const EMOJI_BOT = ["🐈‍⬛", "🐱", "🐯", "🐈"];
+    const EMOJI_BOT = ["🐈‍⬛", "🐱", "🐯", "🐈"];
 
   const DIFICULTAD = {
     facil:   { reaccion: [2300, 4000], extraMemoria: 1200, error: 0.12, memoria: 0.55 },
@@ -32,6 +31,7 @@
     for (let col = 0; col < 3; col++)
       RANURAS.push({ left: 2.5 + col * 32.5, top: 2.7 + fila * 48.6 });
 
+  const t = (k, v) => window.I18N.t(k, v);
   const $ = (s) => document.querySelector(s);
   const azar = (a, b) => a + Math.random() * (b - a);
   const elegir = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -55,10 +55,10 @@
   function nuevaPartida() {
     limpiarTimers();
     const nRivales = +$("#rivales").value;
-    const nombre = $("#nombre").value.trim() || "Tú";
+    const nombre = $("#nombre").value.trim() || t("nombreDef");
     const jugadores = [{ nombre, bot: false, color: COLORES[0], pts: 0, fuera: false }];
     for (let i = 0; i < nRivales; i++)
-      jugadores.push({ nombre: NOMBRES_BOT[i], emoji: EMOJI_BOT[i], bot: true, color: COLORES[i + 1], pts: 0, fuera: false });
+      jugadores.push({ nombre: t("bots")[i], emoji: EMOJI_BOT[i], bot: true, color: COLORES[i + 1], pts: 0, fuera: false });
 
     const ranuras = [0, 1, 2, 3, 4, 5].sort(() => Math.random() - 0.5);
     estado = {
@@ -74,8 +74,8 @@
     construirTablero();
     construirMarcador();
     ui.dado.dataset.cara = "1";
-    setBoton("Lanzar dado", true);
-    decir("Lanza el dado para empezar. Busca la carta con tantos gatos como marque el dado.");
+    setBoton(t("lanzar"), true);
+    decir(t("msgInicio"));
     mostrar("juego");
   }
 
@@ -84,7 +84,7 @@
     for (const carta of estado.cartas) {
       const el = document.createElement("button");
       el.className = "carta";
-      el.setAttribute("aria-label", "Carta de gato");
+      el.setAttribute("aria-label", t("cartaAria"));
       el.innerHTML = `
         <div class="interior">
           <div class="cara frente"><img src="assets/gato-${carta.id}.png" alt=""></div>
@@ -146,8 +146,8 @@
     estado.jugadores.forEach((j) => (j.fuera = false));
     estado.jugadores.forEach((j) => j.li.classList.remove("gano"));
     actualizarMarcador();
-    setBoton("Lanzar dado", false);
-    decir("Rodando…");
+    setBoton(t("lanzar"), false);
+    decir(t("rodando"));
     ui.dado.classList.add("rodando");
 
     let vueltas = 0;
@@ -167,9 +167,7 @@
     estado.objetivo = n;
     estado.fase = "ronda";
     const carta = cartaConGatos(n);
-    decir(carta.encerrado
-      ? `¡Salió ${n}! Ese gato ya está encerrado… ¿recuerdas en qué canil está?`
-      : `¡Salió ${n}! ¡Atrapa la carta con ${n} gato${n > 1 ? "s" : ""}!`);
+    decir(t(carta.encerrado ? "salioEncerrado" : "salio", { n }));
 
     // Los rivales virtuales reaccionan con su propio tiempo y a veces se equivocan.
     const d = estado.dif;
@@ -188,7 +186,7 @@
     luego(9000, () => {
       if (estado.fase !== "ronda") return;
       revelar(carta, "acierto");
-      cerrarRonda(`Nadie encontró al gato de ${n}. ¡Lanza de nuevo!`);
+      cerrarRonda(t("nadie", { n }));
     });
   }
 
@@ -197,7 +195,7 @@
     if (estado.fase === "ronda") tocar(0, carta);
     else if (estado.fase === "cambio" && estado.ganadorRonda === 0 && carta !== estado.cartaGanada) {
       intercambiar(estado.cartaGanada, carta);
-      terminarCambio(`Cambiaste el canil de lugar. ¡Que no se te olvide!`);
+      terminarCambio(t("cambiaste"));
     }
   }
 
@@ -222,10 +220,9 @@
       }
       actualizarMarcador();
 
-      const quien = j.bot ? j.nombre : "¡Tú";
       const texto = j.bot
-        ? `${j.nombre} ${yaEstaba ? "recordó dónde estaba" : "encerró"} al gato de ${estado.objetivo}.`
-        : `${quien} ${yaEstaba ? "lo recordaste" : "lo encerraste"}! +1 punto.`;
+        ? t(yaEstaba ? "botRecordo" : "botEncerro", { nombre: j.nombre, n: estado.objetivo })
+        : t(yaEstaba ? "tuRecordaste" : "tuEncerraste");
 
       if (j.pts >= META) return finPartida(i);
       if (estado.giros) {
@@ -233,19 +230,17 @@
         decir(texto);
         return luego(700, () => empezarCambio(i, texto));
       }
-      cerrarRonda(texto + " Lanza el dado otra vez.");
+      cerrarRonda(texto + t("sep") + t("otraVez"));
     } else {
       j.fuera = true;
       carta.el.classList.add("error");
       luego(450, () => carta.el.classList.remove("error"));
       if (carta.encerrado) revelar(carta, "error");
       actualizarMarcador();
-      decir(j.bot
-        ? `${j.nombre} se equivocó de gato y queda fuera de esta ronda.`
-        : `¡Ese no era! Quedas fuera de esta ronda.`);
+      decir(j.bot ? t("botError", { nombre: j.nombre }) : t("tuError"));
       if (estado.jugadores.every((x) => x.fuera)) {
         revelar(cartaConGatos(estado.objetivo), "acierto");
-        cerrarRonda("Todos se equivocaron. ¡Lanza de nuevo!");
+        cerrarRonda(t("todosError"));
       }
     }
   }
@@ -265,25 +260,25 @@
     const j = estado.jugadores[i];
     if (!j.bot) {
       estado.cartas.forEach((c) => c.el.classList.toggle("elegible", c !== estado.cartaGanada));
-      setBoton("Seguir sin cambiar", true);
-      decir(texto + " Toca otra carta para cambiarlas de lugar, o sigue sin cambiar.");
+      setBoton(t("seguir"), true);
+      decir(texto + t("sep") + t("tocaOtra"));
       return;
     }
-    setBoton("Lanzar dado", false);
+    setBoton(t("lanzar"), false);
     if (Math.random() < 0.75) {
-      decir(texto + " ¡Atención, va a cambiar el canil de lugar!");
+      decir(texto + t("sep") + t("vaACambiar"));
       luego(900, () => {
         intercambiar(estado.cartaGanada, elegir(estado.cartas.filter((c) => c !== estado.cartaGanada)));
-        luego(700, () => terminarCambio(`${j.nombre} movió el canil. ¿Viste a dónde?`));
+        luego(700, () => terminarCambio(t("movio", { nombre: j.nombre })));
       });
     } else {
-      terminarCambio(texto + " No movió ninguna carta.");
+      terminarCambio(texto + t("sep") + t("noMovio"));
     }
   }
 
   function terminarCambio(texto) {
     estado.cartas.forEach((c) => c.el.classList.remove("elegible"));
-    cerrarRonda((texto || "Seguimos.") + " Lanza el dado.");
+    cerrarRonda((texto || t("seguimos")) + t("sep") + t("lanzaDado"));
   }
 
   function intercambiar(a, b) {
@@ -317,11 +312,10 @@
     limpiarTimers();
     estado.fase = "fin";
     const j = estado.jugadores[i];
-    decir(j.bot ? `${j.nombre} llegó a ${META} puntos.` : `¡Llegaste a ${META} puntos!`);
-    $("#fin-titulo").textContent = j.bot ? `¡Ganó ${j.nombre}!` : "¡Ganaste!";
-    $("#fin-texto").textContent = j.bot
-      ? `Llegó primero a ${META} puntos. ¿Revancha?`
-      : `Llegaste primero a ${META} puntos. ¡Reflejos felinos!`;
+    const v = { nombre: j.nombre, meta: META };
+    decir(j.bot ? t("botLlego", v) : t("tuLlegaste", v));
+    $("#fin-titulo").textContent = j.bot ? t("finBotTitulo", v) : t("finTuTitulo");
+    $("#fin-texto").textContent = j.bot ? t("finBotTexto", v) : t("finTuTexto", v);
     setTimeout(() => ui.fin.showModal(), 900);
   }
 
@@ -329,7 +323,7 @@
 
   function cartaConGatos(n) { return estado.cartas.find((c) => c.gatos === n); }
   function decir(t) { ui.mensaje.textContent = t; }
-  function setBoton(texto, activo) { ui.btnDado.textContent = texto; ui.btnDado.disabled = !activo; }
+  function setBoton(texto, activo) { ui.btnDado.textContent = texto; ui.btnDado.dataset.i18n = texto === t("seguir") ? "seguir" : "lanzar"; ui.btnDado.disabled = !activo; }
   function escapar(s) { return s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`); }
   function mostrar(id) {
     ui.inicio.classList.toggle("activa", id === "inicio");

@@ -197,3 +197,9 @@ dialog li { margin-bottom: 6px; }
   .logo-chico { height: 40px; }
   .cubo { width: 4%; }
 }
+
+/* ---------- Idiomas ---------- */
+.idiomas { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.btn.idioma { background: var(--panel); color: var(--azul); box-shadow: 0 3px 0 var(--naranja-osc); }
+.btn.idioma.activo { background: var(--azul); color: #fff; box-shadow: 0 3px 0 #0c1f3f; }
+html[lang=ja] body { font-family: "Baloo 2", "Hiragino Maru Gothic ProN", "Yu Gothic", "Meiryo", system-ui, sans-serif; }
