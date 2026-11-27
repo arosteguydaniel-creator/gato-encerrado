@@ -9,6 +9,10 @@ Versión web de prueba de **Gato Encerrado**, el juego de reflejos y memoria fel
 
 En esta versión juegas en el navegador contra 1 a 4 gatos virtuales (rivales controlados por la computadora), con tres niveles de dificultad. Funciona en computadora y en el celular, sin instalar nada.
 
+## Idiomas
+
+La app está en español, inglés y japonés (すしネコ). Toma el idioma del navegador, o se elige con los botones de la portada. Para un link directo a un idioma: `?lang=es`, `?lang=en` o `?lang=ja`. Los textos están en `i18n.js`.
+
 ## Cómo jugarlo
 
 Abre `index.html` en el navegador, o sírvelo con cualquier servidor estático:
@@ -55,5 +59,6 @@ El manual todavía no tiene los textos, así que estas reglas se infirieron de l
 index.html   pantalla de inicio, partida y diálogos
 style.css    estilos
 app.js       lógica del juego y de los rivales virtuales
+i18n.js      textos en español, inglés y japonés
 assets/      cartas y arte recortados de los archivos originales
 ```

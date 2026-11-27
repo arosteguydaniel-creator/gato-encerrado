@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Gato Encerrado</title>
+  <title data-i18n="titulo">Gato Encerrado</title>
   <meta name="description" content="Prueba online Gato Encerrado, el juego de reflejos y memoria felina de La Vaca del Tablero.">
   <link rel="icon" href="assets/logo-gato.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,35 +15,40 @@
   <!-- Pantalla de inicio -->
   <section id="inicio" class="pantalla activa">
     <img class="logo" src="assets/logo.png" alt="Gato Encerrado">
-    <p class="lema">¡Lanza el dado, agudiza la vista y sé el más rápido en atrapar al gato!</p>
+    <div class="idiomas" role="group" aria-label="Idioma / Language / 言語">
+      <button class="btn mini idioma" data-lang="es">Español</button>
+      <button class="btn mini idioma" data-lang="en">English</button>
+      <button class="btn mini idioma" data-lang="ja">日本語</button>
+    </div>
+    <p class="lema" data-i18n="lema">¡Lanza el dado, agudiza la vista y sé el más rápido en atrapar al gato!</p>
 
     <div class="panel config">
-      <label>Tu nombre
+      <label><span data-i18n="tuNombre">Tu nombre</span>
         <input id="nombre" maxlength="14" value="Tú">
       </label>
-      <label>Rivales (gatos virtuales)
+      <label><span data-i18n="rivales">Rivales (gatos virtuales)</span>
         <select id="rivales">
-          <option value="1">1 rival (2 jugadores)</option>
-          <option value="2" selected>2 rivales (3 jugadores)</option>
-          <option value="3">3 rivales (4 jugadores)</option>
-          <option value="4">4 rivales (5 jugadores)</option>
+          <option value="1" data-i18n="riv1">1 rival (2 jugadores)</option>
+          <option value="2" selected data-i18n="riv2">2 rivales (3 jugadores)</option>
+          <option value="3" data-i18n="riv3">3 rivales (4 jugadores)</option>
+          <option value="4" data-i18n="riv4">4 rivales (5 jugadores)</option>
         </select>
       </label>
-      <label>Dificultad
+      <label><span data-i18n="dificultad">Dificultad</span>
         <select id="dificultad">
-          <option value="facil">Gatito (fácil)</option>
-          <option value="normal" selected>Gato callejero (normal)</option>
-          <option value="dificil">Tigre (difícil)</option>
+          <option value="facil" data-i18n="facil">Gatito (fácil)</option>
+          <option value="normal" selected data-i18n="normal">Gato callejero (normal)</option>
+          <option value="dificil" data-i18n="dificil">Tigre (difícil)</option>
         </select>
       </label>
       <label class="check">
         <input type="checkbox" id="giros" checked>
-        Giros: quien encierra un gato puede cambiarlo de lugar (opcional)
+        <span data-i18n="girosOpc">Giros: quien encierra un gato puede cambiarlo de lugar (opcional)</span>
       </label>
-      <button id="btn-jugar" class="btn grande">¡A jugar!</button>
-      <button id="btn-reglas" class="btn secundario">Cómo se juega</button>
+      <button id="btn-jugar" class="btn grande" data-i18n="jugar">¡A jugar!</button>
+      <button id="btn-reglas" class="btn secundario" data-i18n="comoSeJuega">Cómo se juega</button>
     </div>
-    <p class="creditos">Diseño: Danny Blue Jet · Ilustración: Buho Pintura · La Vaca del Tablero<br>2 a 5 jugadores · 8+ · 15 min</p>
+    <p class="creditos" data-i18n-html="creditos">Diseño: Danny Blue Jet · Ilustración: Buho Pintura · La Vaca del Tablero<br>2 a 5 jugadores · 8+ · 15 min</p>
   </section>
 
   <!-- Partida -->
@@ -52,7 +57,7 @@
       <img src="assets/logo.png" alt="Gato Encerrado" class="logo-chico">
       <div class="acciones">
         <button id="btn-reglas-2" class="btn mini secundario" aria-label="Reglas">?</button>
-        <button id="btn-salir" class="btn mini secundario">Salir</button>
+        <button id="btn-salir" class="btn mini secundario" data-i18n="salir">Salir</button>
       </div>
     </header>
 
@@ -62,9 +67,9 @@
       <aside class="lateral">
         <div class="zona-dado">
           <div id="dado" class="dado" data-cara="1" aria-live="polite"></div>
-          <button id="btn-dado" class="btn">Lanzar dado</button>
+          <button id="btn-dado" class="btn" data-i18n="lanzar">Lanzar dado</button>
         </div>
-        <p id="mensaje" class="mensaje" aria-live="polite">Lanza el dado para empezar.</p>
+        <p id="mensaje" class="mensaje" aria-live="polite" data-i18n="msgInicio0">Lanza el dado para empezar.</p>
         <ul id="marcador" class="marcador"></ul>
       </aside>
     </div>
@@ -79,8 +84,8 @@
 
   <!-- Reglas -->
   <dialog id="reglas">
-    <h2>Cómo se juega</h2>
-    <ol>
+    <h2 data-i18n="comoSeJuega">Cómo se juega</h2>
+    <ol id="reglas-lista">
       <li><b>Preparación:</b> las 6 cartas de gato se ponen boca arriba. Cada carta tiene una cantidad distinta de gatos-sushi: de <b>1 a 6</b>.</li>
       <li><b>Lanza el dado.</b> Todos buscan a la vez la carta que tenga <b>tantos gatos como marca el dado</b>.</li>
       <li>El primero en tocarla <b>encierra al gato</b>: gana 1 punto y la carta se da vuelta y muestra el canil.</li>
@@ -90,8 +95,8 @@
       <li>Cada jugador avanza su cubo en la pista de puntos.</li>
       <li>Gana quien llega primero a <b>10 puntos</b>.</li>
     </ol>
-    <p class="nota">Versión de prueba: las reglas pueden cambiar.</p>
-    <button class="btn" id="btn-cerrar-reglas">¡Entendido!</button>
+    <p class="nota" data-i18n="nota">Versión de prueba: las reglas pueden cambiar.</p>
+    <button class="btn" id="btn-cerrar-reglas" data-i18n="entendido">¡Entendido!</button>
   </dialog>
 
   <!-- Fin -->
@@ -100,11 +105,12 @@
     <h2 id="fin-titulo"></h2>
     <p id="fin-texto"></p>
     <div class="fila">
-      <button class="btn" id="btn-revancha">Revancha</button>
-      <button class="btn secundario" id="btn-menu">Menú</button>
+      <button class="btn" id="btn-revancha" data-i18n="revancha">Revancha</button>
+      <button class="btn secundario" id="btn-menu" data-i18n="menu">Menú</button>
     </div>
   </dialog>
 
+  <script src="i18n.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
